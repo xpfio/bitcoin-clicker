@@ -1,0 +1,10 @@
+.network .countries{
+    fill:#446688;
+    stroke:#446688;
+    stroke-width: 1px;
+}
+
+.network .city {
+    fill:#53e1f2;
+    stroke: none;
+}
