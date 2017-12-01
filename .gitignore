@@ -19,3 +19,8 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+# API Key
+/preprocessing/api_key.py
+/preprocessing/api_key.pyc
+/preprocessing/data/

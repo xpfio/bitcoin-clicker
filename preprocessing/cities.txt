@@ -1,0 +1,238 @@
+Chongqing China
+Shanghai China
+Delhi India
+Beijing China
+Mumbai India
+Lagos Nigeria
+Karachi Pakistan
+Dhaka Bangladesh
+Guangzhou China
+Istanbul Turkey
+Tokyo Japan
+Bengaluru India
+Moscow Russia
+São Paulo Brazil
+Lahore Pakistan
+Cairo Egypt
+Kinshasa DR Congo
+Jakarta Indonesia
+Seoul Korea, South
+Wenzhou China
+Mexico City Mexico
+Lima Peru
+London United Kingdom
+Xi'an China
+Hyderabad India
+Chennai India
+New York City United States
+Shenzhen China
+Bangkok Thailand
+Suzhou China
+Nanjing China
+Dongguan China
+Tehran Iran
+Quanzhou China
+Shenyang China
+Bogotá Colombia
+Ho Chi Minh City Vietnam
+Hong Kong China
+Baghdad Iraq
+Fuzhou China
+Changsha China
+Wuhan China
+Tianjin China
+Hanoi Vietnam
+Rio de Janeiro Brazil
+Qingdao China
+Foshan China
+Zunyi China
+Santiago Chile
+Riyadh Saudi Arabia
+Ahmedabad India
+Singapore Singapore
+Shantou China
+Ankara Turkey
+Yangon Myanmar
+Saint Petersburg Russia
+Casablanca Morocco
+Abidjan Ivory Coast
+Chengdu China
+Alexandria Egypt
+Kolkata India
+Surat India
+Johannesburg South Africa
+Dar es Salaam Tanzania
+Shijiazhuang China
+Harbin China
+Giza Egypt
+İzmir Turkey
+Zhengzhou China
+New Taipei City Taiwan
+Los Angeles United States
+Changchun China
+Cape Town South Africa
+Yokohama Japan
+Khartoum Sudan
+Guayaquil Ecuador
+Hangzhou China
+Xiamen China
+Berlin Germany
+Busan Korea, South
+Ningbo China
+Jeddah Saudi Arabia
+Durban South Africa
+Algiers Algeria
+Kabul Afghanistan
+Hefei China
+Mashhad Iran
+Pyongyang Korea, North
+Madrid Spain
+Faisalabad Pakistan
+Baku Azerbaijan
+Tangshan China
+Ekurhuleni Metropolitan Municipality South Africa
+Nairobi Kenya
+Zhongshan China
+Pune India
+Addis Ababa Ethiopia
+Jaipur India
+Buenos Aires Argentina
+Incheon Korea, South
+Quezon City Philippines
+Kiev Ukraine
+Salvador, Bahia Brazil
+Rome Italy
+Dubai United Arab Emirates
+Luanda Angola
+Lucknow India
+Kaohsiung Taiwan
+Kanpur India
+Surabaya Indonesia
+Taichung Taiwan
+Basra Iraq
+Toronto Canada
+Taipei Taiwan
+Chicago United States
+Osaka Japan
+Quito Ecuador
+Chaozhou China
+Fortaleza Brazil
+Chittagong Bangladesh
+Bandung Indonesia
+Managua Nicaragua
+Brasília Brazil
+Belo Horizonte Brazil
+Daegu Korea, South
+Houston United States
+Douala Cameroon
+Medellin Colombia
+Yaoundé Cameroon
+Nagpur India
+Cali Colombia
+Tashkent Uzbekistan
+Nagoya Japan
+Isfahan Iran
+Phnom Penh Cambodia
+Kochi India
+Paris France
+Ouagadougou Burkina Faso
+Lanzhou China
+Kano Nigeria
+Dalian China
+Guatemala City Guatemala
+Havana Cuba
+Rawalpindi Pakistan
+Medan Indonesia
+Accra Ghana
+Visakhapatnam India
+Gujranwala Pakistan
+Jinan China
+Karaj Iran
+Peshawar Pakistan
+Minsk Belarus
+Caracas Venezuela
+Sana'a Yemen
+Sapporo Japan
+Tainan Taiwan
+Bucharest Romania
+Curitiba Brazil
+Shiraz Iran
+Vienna Austria
+Brazzaville Congo Republic
+Bhopal India
+Hamburg Germany
+Manila Philippines
+Kuala Lumpur Malaysia
+Maputo Mozambique
+Budapest Hungary
+Warsaw Poland
+Lusaka Zambia
+Kathmandu Nepal
+Tabriz Iran
+Hyderabad, Sindh Pakistan
+Palembang Indonesia
+Almaty Kazakhstan
+Tijuana Mexico
+Patna India
+Montreal Canada
+Davao City Philippines
+Harare Zimbabwe
+Barcelona Spain
+Maracaibo Venezuela
+Caloocan Philippines
+Philadelphia United States
+Novosibirsk Russia
+Phoenix, Arizona United States
+Bulawayo Zimbabwe
+Oran Algeria
+Semarang Indonesia
+Recife Brazil
+Kobe Japan
+Daejeon Korea, South
+Kampala Uganda
+Kawasaki, Kanagawa Japan
+Guadalajara Mexico
+Auckland New Zealand
+Vijayawada India
+Fukuoka Japan
+Kwangju Korea, South
+Porto Alegre Brazil
+Kyoto Japan
+San Antonio United States
+Santa Cruz de la Sierra Bolivia
+Munich Germany
+Kharkiv Ukraine
+Yekaterinburg Russia
+San Diego United States
+Barranquilla Colombia
+Milan Italy
+Ibadan Nigeria
+Makassar Indonesia
+Córdoba Argentina
+Prague Czech Republic
+Mandalay Myanmar
+Dallas United States
+Montevideo Uruguay
+Nizhny Novgorod Russia
+Abuja Nigeria
+Calgary Canada
+Saitama, Saitama Japan
+Hiroshima Japan
+Rosario, Santa Fe Argentina
+Brisbane Australia
+Belgrade Serbia
+Campinas Brazil
+Ulsan Korea, South
+Omsk Russia
+Dakar Senegal
+Abu Dhabi United Arab Emirates
+Monterrey Mexico
+Tripoli Libya
+Rostov-on-Don Russia
+T'bilisi Georgia
+Fez, Morocco Morocco
+Birmingham United Kingdom
+Yerevan Armenia
+Cologne Germany
+Tunis Tunisia
+Islamabad Pakistan
