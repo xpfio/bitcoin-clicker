@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
-import { Navbar, Jumbotron, Button } from 'react-bootstrap';
-import Wallet from './components/wallet'
-import Blockchain from './components/blockchain'
+// import { Navbar, Jumbotron, Button } from 'react-bootstrap';
+// import Wallet from './components/wallet'
+// import Blockchain from './components/blockchain'
 import Mining from './components/mining'
-import Network from './components/network'
+// import Network from './components/network'
 import BlockCandidate from './components/blockCandidate'
 import Upgrades from './components/upgrades'
 
@@ -24,7 +23,7 @@ class App extends Component {
 
     let rectOnTheTopLeft = [...Array(900)].map((d,p)=>{
       let rand = 1+20*Math.random();
-      return (<rect x={p} y={50-rand} width="1" height={rand} fill="grey"/>)
+      return (<rect key={'recttopleft-'+p} x={p} y={50-rand} width="1" height={rand} fill="grey"/>)
     });
 
     let aligneLeft = {
@@ -34,7 +33,7 @@ class App extends Component {
     return (
       <div className="App">
         {/* <Wallet/> */}
-        <img src={BgImg} style={BgImgStyle}/>
+        <img src={BgImg} alt="bg img, to be removed" style={BgImgStyle}/>
         <div className="col-sm-12" style={aligneLeft}>
           <svg width="900" height="80">
             {rectOnTheTopLeft}
@@ -53,25 +52,25 @@ class App extends Component {
           </div>
         </div>
 
-        <div className="col-sm-1">
+        <div className="col-sm-1 no-padding">
           <h1>142.12</h1><p>USD</p>
           <h1>12.223</h1><p>BTC</p>
           <h1>0.21212</h1><p>BTC/USD</p>
         </div>
-        <div className="col-sm-3">
+        <div className="col-sm-2 no-padding">
           <h1>A</h1>
         </div>
-        <div className="col-sm-5">
+        <div className="col-sm-12 col-md-12 col-lg-6 no-padding">
           <Mining/>
         </div>
-        <div className="col-sm-3">
-          <Network/>
+        <div className="col-sm-8 col-md-6 col-lg-3 no-padding">
+           {/* <Network/>  */}
         </div>
 
-        <div className="col-sm-4">
+        <div className="col-sm-4 no-padding">
           <BlockCandidate/>
         </div>
-        <div className="col-sm-8">
+        <div className="col-sm-8 no-padding">
           <Upgrades/>
         </div>
       </div>

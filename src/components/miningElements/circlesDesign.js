@@ -9,7 +9,7 @@ class CircleDesign extends Component {
 
     let circlesElement = '';
     if(this.props.circlesMiningData){
-        circlesElement = this.props.circlesMiningData['circles'].map((circle,index)=>{
+        circlesElement = this.props.circlesMiningData.map((circle,index)=>{
         let n = circle.numberOfElements;
         n -= circle.numberOfElementsMissing?circle.numberOfElementsMissing:0;
         return (
@@ -23,7 +23,7 @@ class CircleDesign extends Component {
                             strokeWidth={circle.strokeWidth} 
                             opacity={circle.opacity} 
                             d={describeArc( 
-                                200,
+                                188,
                                 200,
                                 circle.r,
                                 circle.startAngle + p*360/circle.numberOfElements,
@@ -36,8 +36,8 @@ class CircleDesign extends Component {
                 <animateTransform attributeType="xml"
                     attributeName="transform"
                     type="rotate"
-                        from="0 200 200" 
-                        to={circle.rotationDirection == -1?"-360 200 200":"360 200 200"}
+                        from="0 188 200" 
+                        to={circle.rotationDirection === -1?"-360 188 200":"360 188 200"}
                     dur={circle.rotationSpeed}
                     repeatCount="indefinite"/>
             }

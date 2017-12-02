@@ -12,3 +12,7 @@ body, html {
 .svg-text-center {
   text-anchor: middle;
 }
+
+.no-padding{
+  padding:0;
+}
