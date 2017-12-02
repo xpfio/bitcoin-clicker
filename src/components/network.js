@@ -27,7 +27,7 @@ class Network extends Component {
     
     return (
       <div className="network">
-        <h1>Network</h1>
+        {/* <h1>Network</h1> */}
         <svg width="100%" height="400">
           <filter id="blurMe3">
               <feGaussianBlur in="SourceGraphic" stdDeviation="5"/>
@@ -38,6 +38,8 @@ class Network extends Component {
           <g filter="url(#blurMe3)">{cities}</g>
           <g>{cities}</g>
 
+          <rect x="0" y="0" width="90" height="20" fill="#1b3e50"/>
+          <text x="45" y="14" fill="white" fontSize="10px" textAnchor="middle">NETWORK</text>
         </svg>
       </div>
     )

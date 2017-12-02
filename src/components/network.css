@@ -1,10 +1,17 @@
+.network svg {
+    border: 1px rgb(200,200,200) solid;
+    border-width: 0px 1px 0px 1px;
+}
+
 .network .countries{
     fill:#446688;
     stroke:#446688;
     stroke-width: 1px;
+    opacity: 0.5;
 }
 
 .network .city {
     fill:#53e1f2;
     stroke: none;
 }
+

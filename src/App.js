@@ -9,19 +9,62 @@ import Network from './components/network'
 import BlockCandidate from './components/blockCandidate'
 import Upgrades from './components/upgrades'
 
+import BgImg from './images/bg.png'
+
 class App extends Component {
   render() {
+    let BgImgStyle = {
+      position: "absolute",
+      width: "100%",
+      top:0,
+      zIndex:-99,
+      left:0,
+      opacity:0.2   
+    }
+
+    let rectOnTheTopLeft = [...Array(900)].map((d,p)=>{
+      let rand = 1+20*Math.random();
+      return (<rect x={p} y={50-rand} width="1" height={rand} fill="grey"/>)
+    });
+
+    let aligneLeft = {
+      textAlign:'left'
+    }
+
     return (
       <div className="App">
-        <Wallet/>
-        <div className="col-sm-12">
-          {/* <Blockchain/> */}
+        {/* <Wallet/> */}
+        <img src={BgImg} style={BgImgStyle}/>
+        <div className="col-sm-12" style={aligneLeft}>
+          <svg width="900" height="80">
+            {rectOnTheTopLeft}
+          </svg>
+          <div className="pull-right">
+            <svg width="285" height="80">
+              <rect x="0" y="20" width="50" height="50" fill="grey"/>
+              <text x="25" y="50" fill="white" className="svg-text-center">V1</text>
+              <rect x="70" y="20" width="50" height="50" fill="grey"/>
+              <text x="95" y="50" fill="white" className="svg-text-center">STA</text>
+              <rect x="140" y="20" width="50" height="50" fill="grey"/>
+              <text x="165" y="50" fill="white" className="svg-text-center">ACH</text>
+              <rect x="210" y="20" width="50" height="50" fill="grey"/>
+              <text x="235" y="50" fill="white" className="svg-text-center">SOC</text>
+            </svg>
+          </div>
         </div>
 
-        <div className="col-sm-4">
+        <div className="col-sm-1">
+          <h1>142.12</h1><p>USD</p>
+          <h1>12.223</h1><p>BTC</p>
+          <h1>0.21212</h1><p>BTC/USD</p>
+        </div>
+        <div className="col-sm-3">
+          <h1>A</h1>
+        </div>
+        <div className="col-sm-5">
           <Mining/>
         </div>
-        <div className="col-sm-8">
+        <div className="col-sm-3">
           <Network/>
         </div>
 

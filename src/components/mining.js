@@ -27,13 +27,15 @@ class Mining extends Component {
   render() {
     return (
         <div>
-            <h1>Mining</h1>
             <svg onClick={this.handleClick} width="400px" height="400px">
                  <filter id="blurMe">
                     <feGaussianBlur in="SourceGraphic" stdDeviation="5"/>
                 </filter>
-                <g filter="url(#blurMe)"><CircleDesign/></g>
+                <g filter="url(#blurMe)"><CircleDesign circlesMiningData={circlesMiningData}/></g>
                 <g><CircleDesign circlesMiningData={circlesMiningData}/></g>
+
+                <rect x="0" y="0" width="90" height="20" fill="#1b3e50"/>
+                <text x="45" y="14" fill="white" fontSize="10px" textAnchor="middle">MINING</text>
             </svg>
         </div>
     );
