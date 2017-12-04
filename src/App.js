@@ -6,6 +6,10 @@ import Mining from './components/mining'
 import Network from './components/network'
 import Upgrades from './components/upgrades'
 
+import ReactGA from 'react-ga';
+ReactGA.initialize('UA-110679720-1');
+ReactGA.pageview(window.location.pathname + window.location.search);
+
 class App extends Component {
 
   componentDidMount = () => {
