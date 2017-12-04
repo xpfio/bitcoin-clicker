@@ -22,7 +22,7 @@ module.exports = [
     "state": {
       "cost": 100,
       "count": 0,
-      "rate": 8e0
+      "rate": 30
     }
   },
   {
@@ -35,7 +35,7 @@ module.exports = [
     "state": {
       "cost": 500,
       "count": 0,
-      "rate": 2.5e1
+      "rate": 200
     }
   },
   {
@@ -48,7 +48,7 @@ module.exports = [
     "state": {
       "cost": 2000,
       "count": 0,
-      "rate": 1e2
+      "rate": 500
     }
   },
   {

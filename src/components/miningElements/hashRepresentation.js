@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import numeral from 'numeral';
+// import numeral from 'numeral';
 
 class HashRepresentation extends Component {
   render() {

@@ -19,7 +19,7 @@ class Network extends Component {
   }
 
   render() {
-    const projection = d3.geoMercator().scale(100).translate([200,200])
+    const projection = d3.geoMercator().scale(200).translate([500,350])
     const pathGenerator = d3.geoPath().projection(projection)
     const countries = worlddata.features
       .map((d,i) => <path
@@ -53,7 +53,7 @@ class Network extends Component {
     return (
       <div className="network">
         {/* <h1>Network</h1> */}
-        <svg id="svg-network" width="100%" height="250px">
+        <svg id="svg-network" width="100%" height="550px">
           <filter id="blurMe3">
               <feGaussianBlur in="SourceGraphic" stdDeviation="5"/>
           </filter>

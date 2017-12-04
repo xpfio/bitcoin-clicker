@@ -4,6 +4,7 @@ import './mining.css';
 import RigUpgradeElement from './miningElements/rigUpgrade';
 import ElecUpgradeElement from './miningElements/elecUpgrade';
 import CoolingUpgradeElement from './miningElements/coolingUpgrade';
+import numeral from 'numeral';
 
 import circlesMiningData from '../api/circlesMining';
 
@@ -12,6 +13,8 @@ import ElecUpgrade from '../api/electricityUpgrades';
 import CoolingUpgrade from '../api/coolingUpgrades';
 
 import HashRepresentation from './miningElements/hashRepresentation'
+
+import FadeImg from '../images/fade.png'
 
 class Mining extends Component {
   constructor(props) {
@@ -68,7 +71,7 @@ class Mining extends Component {
       this.setState((prevState)=>{
         let currentRate = d.state.rate;
         let currentCost = d.state.cost;
-        let tmp = prevState.miningRigUpdates.filter(rig=>rig.key==d.key)[0];
+        let tmp = prevState.miningRigUpdates.filter(rig=>rig.key===d.key)[0];
         tmp.state.cost*=d.cost_increase;
         tmp.state.count+=1;
 
@@ -106,19 +109,23 @@ class Mining extends Component {
       cursor:"pointer"
     };
 
-    let borderTitlesStyle = {
-      border: "1px rgb(200,200,200) solid",
-      borderWidth: "1px 0px 1px 0px"
-    }
-
     let rigUpdates = this.state.miningRigUpdates.filter(d=>2*this.state.cash>=d.state.cost).map((d,p)=><g onClick={(k)=>this.handleClickBuy(d,k)}><RigUpgradeElement index={p} upgrade={d}/></g>)
     let elecUpdates = ElecUpgrade.filter(d=>2*this.state.cash>=d.state.cost).map((d,p)=><ElecUpgradeElement index={p} upgrade={d}/>)
     let coolingUpdates = CoolingUpgrade.filter(d=>2*this.state.cash>=d.state.cost).map((d,p)=><CoolingUpgradeElement index={p} upgrade={d}/>)
 
+    let FadeImgStyle = {
+      position: 'absolute',
+      'right':0,
+      'top':0
+    };
+
     return (
         <div>
 
-              <svg className="miningLeft" width="100%" height="120px">
+<div className="row">
+  <div className="col-sm-12 no-padding">
+      <img src={FadeImg} alt="" className="visible-xs" style={FadeImgStyle}/>
+              <svg className="miningUp" width="700px" height="120px">
                 <line x1="90" y1="0" x2="90" y2="115" stroke="white" strokeWidth="1"/>
                 
                 <text x="80" y="11" fill="white" textAnchor="end" fontSize="10px">CURRENT</text>
@@ -129,14 +136,12 @@ class Mining extends Component {
                 <text x="100" y="75" fill="white" fontFamily="courier" textAnchor="left" fontSize="15px">0x00000000000000000ffff0000000000000000000000000000000000000000000</text>
                 <g transform="translate(120,80)"><HashRepresentation hash="00000000000000000ffff0000000000000000000000000000000000000000000"/></g>
               </svg>  
-            <svg className="miningLeft" width="150px" height="400px">
-              <line x1="0" y1="1" x2="150" y2="1" stroke="white" strokeWidth="1"/>
-              <text x="0" y="15" fill="white" fontSize="10px">MINING RIG</text>
+  </div>
+</div>
+<div className="row">
 
-              {rigUpdates}
-            </svg>
-
-            <svg className="miningCenter" onClick={this.handleClick} width="375px" height="400px" style={styleSvg}>
+  <div className="col-sm-12 col-lg-6 col-lg-push-3 no-padding">
+            <svg id="clicker" className="miningCenter" onClick={this.handleClick} width="375px" height="400px" style={styleSvg}>
                  <filter id="blurMe">
                     <feGaussianBlur in="SourceGraphic" stdDeviation="5"/>
                 </filter>
@@ -151,10 +156,23 @@ class Mining extends Component {
                 <line x1="20" y1="60" x2="130" y2="60" strokeWidth="1" stroke="white"></line>
                 <line x1="130" y1="60" x2="150" y2="80" strokeWidth="1" stroke="white"></line>
 
-                <text x="300" y="50" fill="white" fontSize="13px" textAnchor="middle">{this.state.cash} °C</text>
+                <text x="300" y="50" fill="white" fontSize="13px" textAnchor="middle">{numeral(this.state.cash).format('0.00a')} °C</text>
                 <line x1="355" y1="60" x2="245" y2="60" strokeWidth="1" stroke="white"></line>
                 <line x1="245" y1="60" x2="230" y2="75" strokeWidth="1" stroke="white"></line>
             </svg>
+  </div>
+
+
+  <div className="col-xs-6 col-sm-6 col-lg-3 col-lg-pull-6 no-padding">
+            <svg className="miningLeft" width="150px" height="400px">
+              <line x1="0" y1="1" x2="150" y2="1" stroke="white" strokeWidth="1"/>
+              <text x="0" y="15" fill="white" fontSize="10px">MINING RIG</text>
+
+              {rigUpdates}
+            </svg>
+  </div>
+
+  <div className="col-xs-6 col-sm-6 col-lg-3 no-padding">
 
             <svg className="miningRight" width="150px" height="400px">
               <line x1="1" y1="1" x2="150" y2="1" stroke="white" strokeWidth="1"/>
@@ -166,6 +184,8 @@ class Mining extends Component {
               {coolingUpdates}
 
             </svg>
+  </div>
+</div>
         </div>
     );
   }
