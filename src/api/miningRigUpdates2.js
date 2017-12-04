@@ -3,13 +3,13 @@ module.exports = [
     "key": "iphone-calc",
     "name": "iPhone Calc. Pro",
     "description": "Hash using your Bionic Chip Micromodular 5S",
-    "cost_increase": 1.5,
+    "cost_increase": 1.1,
     "consumptionElec": 1,
     "heatProduced": 1,
     "state": {
       "cost": 1,
       "count": 0,
-      "rate": 1
+      "rate": 1.5
     }
   },
   {
@@ -20,9 +20,9 @@ module.exports = [
     "consumptionElec": 10,
     "heatProduced": 10,
     "state": {
-      "cost": 100,
+      "cost": 20,
       "count": 0,
-      "rate": 30
+      "rate": 100
     }
   },
   {
@@ -92,7 +92,7 @@ module.exports = [
   },
   {
     "key": "ibm",
-    "name": "IBM Roadrunner",
+    "name": "IBM Deep Blue",
     "description": "",
     "cost_increase": 1.15,
     "consumptionElec": 1e6,

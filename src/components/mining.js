@@ -1,73 +1,102 @@
 import React, { Component } from 'react';
-import CircleDesign from './miningElements/circlesDesign'
-import './mining.css';
-import RigUpgradeElement from './miningElements/rigUpgrade';
-import ElecUpgradeElement from './miningElements/elecUpgrade';
-import CoolingUpgradeElement from './miningElements/coolingUpgrade';
-import numeral from 'numeral';
+
+import Machine from './miningElements/machine';
+import HashElement from './miningElements/hashElement';
+import RigWrapper from './miningElements/rigWrapper';
+import ElecWrapper from './miningElements/elecWrapper';
+import CoolingWrapper from './miningElements/coolingWrapper';
+
+import {getNewRandomHash, getHashAnswer} from '../helpers/hashTools';
 
 import circlesMiningData from '../api/circlesMining';
-
 import miningRigUpdates from '../api/miningRigUpdates2';
 import ElecUpgrade from '../api/electricityUpgrades';
 import CoolingUpgrade from '../api/coolingUpgrades';
-
-import HashRepresentation from './miningElements/hashRepresentation'
-
-import FadeImg from '../images/fade.png'
 
 class Mining extends Component {
   constructor(props) {
     super(props);
     this.state = {
       clickTotal: 0,
-      hash: "3d7659fe0f5368e2711004cb7db92a7940802b8d4d18351d7114a36a875f5acc",
-      hashRate: 1,
+      hash: "0000000000000000000000000000000000000000000000000000000000000000",
+      hashRate: 0,
       cash: 0,
       circlesMachineMining: circlesMiningData,
       miningRigUpdates: miningRigUpdates,
-      setIntervalId: 0
+      setIntervalId:0,
+      maxCash:0,
+      difficulty:6,
+      blockFound:true,
+      temperature:0
     };
-
-    // This binding is necessary to make `this` work in the callback
-    this.handleClick = this.handleClick.bind(this);
-    this.setIntervalHash = this.setIntervalHash.bind(this);
-    this.changeHash = this.changeHash.bind(this);
   }
 
-  setIntervalHash(){
-    this.setState(prev=>{
-      let id = prev.setIntervalId;
-      clearInterval(id);
-      id = setInterval(()=>{
+  componentDidMount = () => {
+    // Add hash Rate
+    setInterval(() => {
+      this.setState(prevState=>({
+        cash:prevState.cash+(prevState.hashRate)/100,
+        maxCash: Math.max(prevState.maxCash,prevState.cash+(prevState.hashRate)/100),
+        temperature:prevState.temperature+Math.log(1+prevState.hashRate/100)
+      }))
+    },500)
 
-        this.setState(()=>{
-          this.changeHash();
-          let tmp = this.state.circlesMachineMining;
-          tmp[1].numberOfElementsMissing-=1;
-          if(tmp[1].numberOfElementsMissing<0){
-              tmp[1].numberOfElementsMissing=tmp[1].numberOfElements-1;
-          }
-            return {circlesMachineMining:tmp}
-        })
-
-      },1000/Math.log(2+prev.hashRate))
-      return {setIntervalId:id}
-    })
+    // Increase Difficulty
+    setInterval(() => {
+      this.setState(prevState=>({
+        difficulty:Math.min(60,Math.floor(6+Math.log(1+prevState.hashRate)))
+      }))
+    },20000)
   }
 
-  changeHash(){
-    let prob = ['0','0','1','2','3','4','5','6','7','8','9','a','b','c','d','e','f']; // Double 0 proba... hardcoded
-    this.setState(() => ({
-      hash: [...Array(64)].map(d=>prob[Math.floor(Math.random()*prob.length)]).join('')
-    }));
+  componentDidUpdate = () => {
+    console.log('UPDATED')
   }
 
-  handleClickBuy(d) {
-    console.log(d)
+  newIntervalUpdates = (hash) => {
+    // Update Rendering Hashing
+    console.log('TET')
+    clearInterval(this.state.setIntervalId);
+    if(hash==0){
+      return true;
+    }
+    this.state.setIntervalId = setInterval(()=>{
+                                    this.changeHash();
+                                    this.updateBlockMining();}
+                                  ,  1000/Math.log(2+hash/100))
+
+  }
+
+  changeHash = () => {
+    if(Math.random()<=0.99 && this.state.clickTotal!=21){
+      this.setState(() => ({
+        hash: getNewRandomHash(),
+        blockFound:false
+      }));
+    }
+    else{
+      this.props.propagate()
+      this.setState(() => ({
+        hash: getHashAnswer(this.state.difficulty),
+        blockFound:true
+      }));
+    }
+  }
+
+  updateBlockMining = () => {
+      this.setState(()=>{
+        this.changeHash();
+        let tmp = this.state.circlesMachineMining;
+        tmp[1].numberOfElementsMissing-=1;
+        if(tmp[1].numberOfElementsMissing<0){
+            tmp[1].numberOfElementsMissing=tmp[1].numberOfElements-1;
+        }
+          return {circlesMachineMining:tmp}
+      })
+  }
+
+  handleClickBuy = d => {
     if(d.state.cost<=this.state.cash){
-      console.log(d.state.cost)
-      console.log(this.state.cash)
       this.setState((prevState)=>{
         let currentRate = d.state.rate;
         let currentCost = d.state.cost;
@@ -79,18 +108,19 @@ class Mining extends Component {
         hashRate : prevState.hashRate + currentRate,
         cash : prevState.cash - currentCost,
         miningRigUpdates: prevState.miningRigUpdates
-      }},this.setIntervalHash);
-
+      }});
+      this.newIntervalUpdates(this.state.hashRate + d.state.rate);
     }
   }
 
 
 
-  handleClick() {
+  handleClick = () => {
     this.setState(prevState => ({
       clickTotal: prevState.clickTotal += 1,
-      hashRate: prevState.hashRate+1,
-      cash: prevState.cash+1
+      // hashRate: prevState.hashRate+1,
+      cash: prevState.cash+1/100,
+      maxCash: Math.max(prevState.maxCash,prevState.cash+1/100)
     }));
 
     this.setState(()=>{
@@ -105,87 +135,99 @@ class Mining extends Component {
   }
 
   render() {
-    let styleSvg = {
-      cursor:"pointer"
-    };
-
-    let rigUpdates = this.state.miningRigUpdates.filter(d=>2*this.state.cash>=d.state.cost).map((d,p)=><g onClick={(k)=>this.handleClickBuy(d,k)}><RigUpgradeElement index={p} upgrade={d}/></g>)
-    let elecUpdates = ElecUpgrade.filter(d=>2*this.state.cash>=d.state.cost).map((d,p)=><ElecUpgradeElement index={p} upgrade={d}/>)
-    let coolingUpdates = CoolingUpgrade.filter(d=>2*this.state.cash>=d.state.cost).map((d,p)=><CoolingUpgradeElement index={p} upgrade={d}/>)
-
-    let FadeImgStyle = {
-      position: 'absolute',
-      'right':0,
-      'top':0
-    };
 
     return (
         <div>
 
-<div className="row">
-  <div className="col-sm-12 no-padding">
-      <img src={FadeImg} alt="" className="visible-xs" style={FadeImgStyle}/>
-              <svg className="miningUp" width="700px" height="120px">
-                <line x1="90" y1="0" x2="90" y2="115" stroke="white" strokeWidth="1"/>
-                
-                <text x="80" y="11" fill="white" textAnchor="end" fontSize="10px">CURRENT</text>
-                <text x="100" y="12" fill="white" fontFamily="courier" textAnchor="left" fontSize="15px">{"0x"+this.state.hash}</text>
-                <g transform="translate(120,20)"><HashRepresentation hash={this.state.hash}/></g>
-                
-                <text x="80" y="74" fill="white" textAnchor="end" fontSize="10px">TARGET</text>
-                <text x="100" y="75" fill="white" fontFamily="courier" textAnchor="left" fontSize="15px">0x00000000000000000ffff0000000000000000000000000000000000000000000</text>
-                <g transform="translate(120,80)"><HashRepresentation hash="00000000000000000ffff0000000000000000000000000000000000000000000"/></g>
-              </svg>  
-  </div>
-</div>
-<div className="row">
+          <div className="row">
+            <div className="col-sm-12 no-padding">
+              <HashElement 
+                hash={this.state.hash}
+                difficulty={this.state.difficulty}
+                blockFound={this.state.blockFound}/> 
+            </div>
+          </div>
 
-  <div className="col-sm-12 col-lg-6 col-lg-push-3 no-padding">
-            <svg id="clicker" className="miningCenter" onClick={this.handleClick} width="375px" height="400px" style={styleSvg}>
-                 <filter id="blurMe">
-                    <feGaussianBlur in="SourceGraphic" stdDeviation="5"/>
-                </filter>
+          <div className="row">
+            {/*LEFT HAND SIDE  */}
+            <div className="col-xs-12 col-sm-12 col-md-6 col-lg-6 no-padding">
+              <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+              <Machine
+                hashRate = {this.state.hashRate}
+                cash = {this.state.cash}
+                handleClick = {this.handleClick}
+                circlesMachineMining = {this.state.circlesMachineMining}
+                temperature = {Math.max(25,this.state.temperature)}
+              />
+              </div>
+              <div className="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                <RigWrapper
+                  miningRigUpdates={this.state.miningRigUpdates}
+                  cash = {this.state.cash}
+                  maxCash = {this.state.maxCash}
+                  cost={this.state.cost}
+                  handleClickBuy={this.handleClickBuy}
+                />
+              </div>
 
-                <g filter="url(#blurMe)"><CircleDesign circlesMiningData={this.state.circlesMachineMining.slice(0,2+Math.floor(Math.log(1+this.state.hashRate)))}/></g>
-                <g><CircleDesign circlesMiningData={this.state.circlesMachineMining.slice(0,2+Math.floor(Math.log(1+this.state.hashRate)))}/></g>
+              <div className="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                {/* <ElecWrapper
+                  ElecUpgrade={ElecUpgrade}
+                  cash = {this.state.cash}
+                  maxCash = {this.state.maxCash}
+                  cost={this.state.cost}
+                  handleClickBuy={this.handleClickBuy}
+                /><br/> */}
 
-                <rect x="138" y="360" width="100" height="20" fill="#1b3e50"/>
-                <text x="188" y="374" fill="white" fontSize="10px" textAnchor="middle">MINING</text>
+                {/* <CoolingWrapper
+                  CoolingUpgrade={CoolingUpgrade}
+                  cash = {this.state.cash}
+                  maxCash = {this.state.maxCash}
+                  cost={this.state.cost}
+                  handleClickBuy={this.handleClickBuy}
+                /> */}
+              </div>
+            </div>
+            {/*RIGHT HAND SIDE  */}
+            <br/>
+            <br/>
+            Wallet: {this.state.cash} USD
+            <br/>
+            <div className="col-xs-12 col-sm-12 col-md-6 col-lg-6 no-padding">
+              <svg className="miningLeft" width="360px" height="200px">
+                <line x1="0" y1="1" x2="375" y2="1" stroke="white" strokeWidth="1"/>
+                <text x="0" y="15" fill="white" fontSize="10px">BLOCK CANDIDATE</text>
+              </svg><br/>
 
-                <text x="75" y="50" fill="white" fontSize="13px" textAnchor="middle">{this.state.hashRate} H/s</text>
-                <line x1="20" y1="60" x2="130" y2="60" strokeWidth="1" stroke="white"></line>
-                <line x1="130" y1="60" x2="150" y2="80" strokeWidth="1" stroke="white"></line>
+                  <svg className="miningLeft" width="360px" height="200px">
+                    <line x1="0" y1="1" x2="375" y2="1" stroke="white" strokeWidth="1"/>
+                    <text x="0" y="15" fill="white" fontSize="10px">MERKLE TREE</text>
+                  </svg><br/>
 
-                <text x="300" y="50" fill="white" fontSize="13px" textAnchor="middle">{numeral(this.state.cash).format('0.00a')} °C</text>
-                <line x1="355" y1="60" x2="245" y2="60" strokeWidth="1" stroke="white"></line>
-                <line x1="245" y1="60" x2="230" y2="75" strokeWidth="1" stroke="white"></line>
-            </svg>
-  </div>
+              <svg className="miningLeft" width="360px" height="200px">
+                <line x1="0" y1="1" x2="375" y2="1" stroke="white" strokeWidth="1"/>
+                <text x="0" y="15" fill="white" fontSize="10px">COINBASE</text>
+              </svg><br/>
 
+              <div className="row">
+                <div className="col-xs-6">
+                  <svg className="miningLeft" width="150px" height="200px">
+                    <line x1="0" y1="1" x2="150" y2="1" stroke="white" strokeWidth="1"/>
+                    <text x="0" y="15" fill="white" fontSize="10px">UTXO</text>
+                  </svg>
+                </div>
 
-  <div className="col-xs-6 col-sm-6 col-lg-3 col-lg-pull-6 no-padding">
-            <svg className="miningLeft" width="150px" height="400px">
-              <line x1="0" y1="1" x2="150" y2="1" stroke="white" strokeWidth="1"/>
-              <text x="0" y="15" fill="white" fontSize="10px">MINING RIG</text>
+                <div className="col-xs-6">
+                  <svg className="miningLeft" width="150px" height="200px">
+                    <line x1="0" y1="1" x2="150" y2="1" stroke="white" strokeWidth="1"/>
+                    <text x="0" y="15" fill="white" fontSize="10px">MEMPOOL</text>
+                  </svg>
+                </div>
+              </div>
 
-              {rigUpdates}
-            </svg>
-  </div>
+            </div>
+          </div>
 
-  <div className="col-xs-6 col-sm-6 col-lg-3 no-padding">
-
-            <svg className="miningRight" width="150px" height="400px">
-              <line x1="1" y1="1" x2="150" y2="1" stroke="white" strokeWidth="1"/>
-              <text x="150" y="15" fill="white" fontSize="10px" textAnchor="end">ENERGY</text>
-              {elecUpdates}
-
-              <line x1="1" y1="201" x2="150" y2="201" stroke="white" strokeWidth="1"/>
-              <text x="150" y="215" fill="white" fontSize="10px" textAnchor="end">COOLING</text>
-              {coolingUpdates}
-
-            </svg>
-  </div>
-</div>
         </div>
     );
   }

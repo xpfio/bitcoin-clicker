@@ -1,7 +1,7 @@
 module.exports = 
 	[
 		{
-			id: 'arc1', 
+			id: 'extorior-clicking', 
 			fill: 'none', 
             stroke: 'red',
             strokeWidth: 10,
@@ -9,11 +9,11 @@ module.exports =
             startAngle: 0,
             numberOfElements: 24,
 			spaceBetweenElements: 5,
-			numberOfElementsMissing:6
+			numberOfElementsMissing:24
             
 		},
 		{
-			id: 'arc8', 
+			id: 'center-mining-working', 
 			fill: 'none', 
             stroke: 'red',
             strokeWidth: 8,
@@ -25,7 +25,7 @@ module.exports =
             
 		},
 		{
-			id: 'arc10', 
+			id: 'center-rotating-info', 
 			fill: 'none', 
             stroke: '#53e1f2',
             strokeWidth: 2,

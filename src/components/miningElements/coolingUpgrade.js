@@ -8,7 +8,7 @@ class elecUpgrade extends Component {
     // console.log(this.props)
     return (
 
-      <g transform={"translate(0,"+(230+this.props.index*40)+")"} cursor="pointer">
+      <g transform={"translate(0,"+(30+this.props.index*40)+")"} cursor="pointer">
         <rect x="50" y="0" width="100" height="25" fill="#163e50"/>
         <rect x="147" y="0" width="3" height="25" fill="#0ee33e"/>
         <text x="55" y="10" fill="white" fontSize="8px" textAnchor="left">{this.props.upgrade.name}</text>

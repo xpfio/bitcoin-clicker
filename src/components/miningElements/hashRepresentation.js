@@ -29,9 +29,9 @@ class HashRepresentation extends Component {
     if(this.props.hash){
         renderedElement = this.props.hash.split('').map((d,p)=>{
             return(
-            <g transform={'translate('+p*PIXEL_SIZE+',0)'}>
+            <g key={'row-hash-rep'+p} transform={'translate('+p*PIXEL_SIZE+',0)'}>
                 {
-                    conversion[d].split('').map((k,indx)=><rect x="0" y={indx*PIXEL_SIZE} fill={k==='0'?'#446688':'#53e1f2'} width={PIXEL_SIZE-PIXEL_SPACE} height={PIXEL_SIZE-PIXEL_SPACE}/>)
+                    conversion[d].split('').map((k,indx)=><rect key={'hash-rep-sq'+p+'-'+indx} x="0" y={indx*PIXEL_SIZE} fill={k==='0'?'#446688':'#53e1f2'} width={PIXEL_SIZE-PIXEL_SPACE} height={PIXEL_SIZE-PIXEL_SPACE}/>)
                 }
             </g>
             )
