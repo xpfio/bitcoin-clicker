@@ -6,6 +6,7 @@ import RigWrapper from './miningElements/rigWrapper';
 import ElecWrapper from './miningElements/elecWrapper';
 import CoolingWrapper from './miningElements/coolingWrapper';
 
+import numeral from 'numeral';
 import {getNewRandomHash, getHashAnswer} from '../helpers/hashTools';
 
 import circlesMiningData from '../api/circlesMining';
@@ -35,8 +36,8 @@ class Mining extends Component {
     // Add hash Rate
     setInterval(() => {
       this.setState(prevState=>({
-        cash:prevState.cash+(prevState.hashRate)/100,
-        maxCash: Math.max(prevState.maxCash,prevState.cash+(prevState.hashRate)/100),
+        cash:prevState.cash+(prevState.hashRate)/10,
+        maxCash: Math.max(prevState.maxCash,prevState.cash+(prevState.hashRate)/10),
         temperature:prevState.temperature+Math.log(1+prevState.hashRate/100)
       }))
     },500)
@@ -50,7 +51,7 @@ class Mining extends Component {
   }
 
   componentDidUpdate = () => {
-    console.log('UPDATED')
+    document.title = numeral(this.state.cash).format('0.00 a') + 'USD - Bitcoin Clicker'
   }
 
   newIntervalUpdates = (hash) => {
@@ -119,8 +120,8 @@ class Mining extends Component {
     this.setState(prevState => ({
       clickTotal: prevState.clickTotal += 1,
       // hashRate: prevState.hashRate+1,
-      cash: prevState.cash+1/100,
-      maxCash: Math.max(prevState.maxCash,prevState.cash+1/100)
+      cash: prevState.cash+1/10,
+      maxCash: Math.max(prevState.maxCash,prevState.cash+1/10)
     }));
 
     this.setState(()=>{
@@ -191,7 +192,7 @@ class Mining extends Component {
             {/*RIGHT HAND SIDE  */}
             <br/>
             <br/>
-            Wallet: {this.state.cash} USD
+            Wallet: {numeral(this.state.cash).format('0.00 a')}USD
             <br/>
             <div className="col-xs-12 col-sm-12 col-md-6 col-lg-6 no-padding">
               <svg className="miningLeft" width="360px" height="200px">
@@ -202,11 +203,30 @@ class Mining extends Component {
                   <svg className="miningLeft" width="360px" height="200px">
                     <line x1="0" y1="1" x2="375" y2="1" stroke="white" strokeWidth="1"/>
                     <text x="0" y="15" fill="white" fontSize="10px">MERKLE TREE</text>
+
+                    {[...Array(32)].map((d,p)=><line className="merkle-tree-link" x1="10" y1={30+5*p} x2="65.5" y2={30+5*p} stroke="white" strokeWidth="1"/>)}
+                    {[...Array(16)].map((d,p)=><line className="merkle-tree-link" x1="65" y1={32.5+10*p} x2="120.5" y2={32.5+10*p} stroke="white" strokeWidth="1"/>)}
+                    {[...Array(8)].map((d,p)=><line className="merkle-tree-link" x1="120" y1={37.5+20*p} x2="175.5" y2={37.5+20*p} stroke="white" strokeWidth="1"/>)}
+                    {[...Array(4)].map((d,p)=><line className="merkle-tree-link" x1="175" y1={47.5+40*p} x2="230.5" y2={47.5+40*p} stroke="white" strokeWidth="1"/>)}
+                    {[...Array(2)].map((d,p)=><line className="merkle-tree-link" x1="230" y1={67.5+80*p} x2="285.5" y2={67.5+80*p} stroke="white" strokeWidth="1"/>)}
+                    {[...Array(1)].map((d,p)=><line className="merkle-tree-link" x1="285" y1={107.5+160*p} x2="340.5" y2={107.5+160*p} stroke="white" strokeWidth="1"/>)}
+
+                    {[...Array(16)].map((d,p)=><line x1="65" y1={30+5*2*p} x2="65" y2={30+5*(2*p+1)} stroke="white" strokeWidth="1"/>)}
+                    {[...Array(8)].map((d,p)=><line x1="120" y1={32.5+10*2*p} x2="120" y2={32.5+10*(2*p+1)} stroke="white" strokeWidth="1"/>)}
+                    {[...Array(4)].map((d,p)=><line x1="175" y1={37.5+20*2*p} x2="175" y2={37.5+20*(2*p+1)} stroke="white" strokeWidth="1"/>)}
+                    {[...Array(2)].map((d,p)=><line x1="230" y1={47.5+40*2*p} x2="230" y2={47.5+40*(2*p+1)} stroke="white" strokeWidth="1"/>)}
+                    {[...Array(1)].map((d,p)=><line x1="285" y1={67.5+80*2*p} x2="285" y2={67.5+80*(2*p+1)} stroke="white" strokeWidth="1"/>)}
+                    {/* {[...Array(1)].map((d,p)=><line x1="340" y1={107.5+160*p} x2="340" y2={107.5+160*p} stroke="white" strokeWidth="1"/>)} */}
+
+                    <rect x="337.5" y="105" width="5" height="5" fill="white"/>
+
+
                   </svg><br/>
 
               <svg className="miningLeft" width="360px" height="200px">
                 <line x1="0" y1="1" x2="375" y2="1" stroke="white" strokeWidth="1"/>
                 <text x="0" y="15" fill="white" fontSize="10px">COINBASE</text>
+                {[...Array(500)].map((d,p)=><rect fill="white" x={10+10*(p%34)} y={30+10*Math.floor(p/34)} width="4" height="4"/>)}
               </svg><br/>
 
               <div className="row">
@@ -214,6 +234,7 @@ class Mining extends Component {
                   <svg className="miningLeft" width="150px" height="200px">
                     <line x1="0" y1="1" x2="150" y2="1" stroke="white" strokeWidth="1"/>
                     <text x="0" y="15" fill="white" fontSize="10px">UTXO</text>
+                    {[...Array(200)].map((d,p)=><circle fill="white" cx={10+10*(p%14)} cy={30+10*Math.floor(p/14)} r="2"/>)}
                   </svg>
                 </div>
 
@@ -221,6 +242,8 @@ class Mining extends Component {
                   <svg className="miningLeft" width="150px" height="200px">
                     <line x1="0" y1="1" x2="150" y2="1" stroke="white" strokeWidth="1"/>
                     <text x="0" y="15" fill="white" fontSize="10px">MEMPOOL</text>
+                    {[...Array(100)].map((d,p)=><line stroke="white" strokeWidth="1" x1={10+10*((2*p)%14)} x2={10+10*((2*p+1)%14)} y1={32+10*Math.floor(2*p/14)} y2={32+10*Math.floor(2*p/14)}/>)}
+                    {[...Array(200)].map((d,p)=><rect fill="white" x={10+10*(p%14)} y={30+10*Math.floor(p/14)} width="4" height="4"/>)}
                   </svg>
                 </div>
               </div>

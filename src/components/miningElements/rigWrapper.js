@@ -16,7 +16,7 @@ class RigWrapper extends Component {
     let rigUpdates = [];
     if(this.props.miningRigUpdates){
         rigUpdates = this.props.miningRigUpdates
-                                    .filter(d=>2*this.props.maxCash>=d.state.cost)
+                                    .filter(d=>10*this.props.maxCash>=d.state.cost)
                                     .map((d,p)=>(
                                         <g key={'rig-wrap'+p} onClick={(k)=>this.handleClickBuy(d,k)} opacity={this.props.cash>=d.state.cost?1:0.2}>
                                             <RigUpgradeElement index={p} upgrade={d}/>
